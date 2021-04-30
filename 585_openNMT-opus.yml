@@ -1,0 +1,62 @@
+save_data: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/run/example
+## Where the vocab(s) will be written
+src_vocab: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/run/example.vocab.src
+tgt_vocab: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/run/example.vocab.tgt
+# Prevent overwriting existing files in the folder
+overwrite: True
+
+# Corpus opts:
+data:
+## TODO COMPLETE CORPUS OPTIONS
+## Add sentencepiece and filter long segments
+    corpus_1:
+        path_src: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/TED2013.en-zh.zh.tok
+        path_tgt: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/TED2013.en-zh.en.tok
+        transforms: [filtertoolong]
+    valid:
+        path_src: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/TED2013.en-zh.zhDev.tok
+        path_tgt: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/TED2013.en-zh.enDev.tok
+        transforms: [filtertoolong]
+
+
+#TODO Fill in vocab you create
+src_vocab: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/run/example.vocab.src
+tgt_vocab: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/run/example.vocab.tgt
+
+# Train on a single GPU
+world_size: 1
+gpu_ranks: [0]
+
+# Where to save the checkpoints
+# Note it won't actually make it to 10,000 steps because of early stopping
+save_model: /content/drive/MyDrive/585_Team_Folder/OPUS/Ted.txt/run/model
+save_checkpoint_steps: 1000
+train_steps: 40000
+valid_steps: 500
+early_stopping: 4 # 2
+
+# Checkpoint settings
+keep_checkpoint: 10 # 5
+seed: 531
+warmup_steps: 400
+report_every: 100
+
+# Model 
+## TODO Create RNN enc/dec with MLP attention
+## Should have 3 layers in encoder and 2 layers in decoder
+## 20% dropout and 500 hidden units
+decoder_type: rnn
+encoder_type: rnn
+enc_layers: 3
+dec_layers: 2
+enc_rnn_size: 300
+dec_rnn_size: 300
+dropout: 0.2
+global_attention : mlp
+
+# Optimizer settings
+## TODO Set Adam as Optimizer
+optim: adam
+learning_rate: 0.001
+
+
